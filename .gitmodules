@@ -1,0 +1,3 @@
+[submodule "CraneIoT"]
+	path = CraneIoT
+	url = https://github.com/ChiquiTi2/CraneIoT
