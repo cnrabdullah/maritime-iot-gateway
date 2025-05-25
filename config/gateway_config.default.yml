@@ -1,0 +1,94 @@
+# Default Configuration for Maritime IoT Gateway
+# Copy this file to gateway_config.yml and customize it for your local setup.
+
+application_name: "MaritimeIoTGateway"
+
+logging:
+  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO" 
+  format: "[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+# --- Data Collectors ---
+collectors:
+  modbus_collector:
+    enabled: true
+    host: "127.0.0.1"
+    port: 8889
+    default_unit_id: 1
+    default_polling_interval_seconds: 0.5
+    default_read_timeout_seconds: 0.1
+    connection_retry_delay_seconds: 5
+
+  nmea_collector:
+    enabled: true
+    host: "127.0.0.1"
+    port: 8888
+    connection_retry_delay_seconds: 5
+
+# --- Sensor Definitions ---
+sensors:
+  - id: "temp_luff_mot_1"
+    name: "Luffing Motor 1 Temperature (PS Winch)"
+    collector_type: "modbus_tcp"
+    collector_config:
+      register_address: 0
+    publisher_config:
+      mqtt_topic_suffix: "main-crane/luffing/temp-mot-1"
+      unit: "°C"
+      change_threshold: 1.0
+
+  - id: "temp_luff_mot_2"
+    name: "Luffing Motor 2 Temperature (STB Winch)"
+    collector_type: "modbus_tcp"
+    collector_config:
+      register_address: 1
+    publisher_config:
+      mqtt_topic_suffix: "main-crane/luffing/temp-mot-2"
+      unit: "°C"
+      change_threshold: 1.0
+
+  - id: "temp_luff_mot_3"
+    name: "Luffing Motor 3 Temperature (PS Winch)"
+    collector_type: "modbus_tcp"
+    collector_config:
+      register_address: 2
+    publisher_config:
+      mqtt_topic_suffix: "main-crane/luffing/temp-mot-3"
+      unit: "°C"
+      change_threshold: 1.0
+
+  - id: "temp_luff_mot_4"
+    name: "Luffing Motor 4 Temperature (STB Winch)"
+    collector_type: "modbus_tcp"
+    collector_config:
+      register_address: 3
+    publisher_config:
+      mqtt_topic_suffix: "main-crane/luffing/temp-mot-4"
+      unit: "°C"
+      change_threshold: 1.0
+
+  - id: "rate_of_turn"
+    name: "Crane Boom Rate of Turn"
+    collector_type: "nmea"
+    collector_config:
+      expected_talker_id: "MG"
+      expected_sentence_type: "ROT"
+    publisher_config:
+      mqtt_topic_suffix: "main-crane/rot"
+      unit: "°/min"
+      change_threshold: 1.0
+
+# --- Data Publisher ---
+mqtt_publisher:
+  enabled: true
+  broker_host: "broker.hivemq.com"
+  broker_port: 1883
+  username: null
+  password: null
+  client_id_prefix: "ows-challenge"
+  keepalive_seconds: 600
+  default_min_publish_interval_seconds: 300
+  lwt_message: "connection lost"
+  topic_prefix: "ows-challenge/mv-sinking-boat"
+  timestamp_format: "%Y-%m-%d at %H:%M UTC"
