@@ -1,3 +1,3 @@
 [submodule "simulators/CraneIoT"]
 	path = simulators/CraneIoT
-	url = https://github.com/ChiquiTi2/CraneIoT.git
+	url = https://github.com/ChiquiTi2/CraneIoT
