@@ -41,5 +41,5 @@ pip-selfcheck.json
 .DS_Store
 Thumbs.db
 
-# Configuration
+# Local configuration
 config/gateway_config.yml
