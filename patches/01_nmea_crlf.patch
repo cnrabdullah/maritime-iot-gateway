@@ -1,0 +1,10 @@
+diff --git a/src/crane_simulation/nmea_server_sim.py b/src/crane_simulation/nmea_server_sim.py
+index 6012200..54b780d 100644
+--- a/src/crane_simulation/nmea_server_sim.py
++++ b/src/crane_simulation/nmea_server_sim.py
+@@ -58,4 +58,4 @@ def sim_nmea_rot_measurement(talker: str = "MG") -> str:
+     measurement = float(random.randrange(1,360,1))
+     nmea_message = pynmea2.ROT(talker=talker, sentence_type="ROT", data=(str(measurement),
+                                                                          random.choice(["A", "A", "A", "A", "V"])))
+-    return nmea_message.render()
++    return nmea_message.render() + "\r\n"
